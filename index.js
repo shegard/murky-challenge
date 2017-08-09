@@ -1,13 +1,35 @@
 var http = require('http');
+var fs = require('fs');
 
 
 var s = http.createServer(function (req, res) {
+	console.log(req.url);
 	
-			res.writeHead(200, {'Content-Type': 'text\html'});
+	let name = req.url.substr(1);
+	if(!name) 
+	{
+		name = 'index.html';
+	}
+	let ext = name.substr(name.lastIndexOf('.') + 1);
+	
+	let sup_ext = {'html': 'text/html', 'css': 'text/css', 'js': 'text/javascript', 'ico': 'image/x-icon'};
+	
+	if(sup_ext[ext])
+	{
+		fs.readFile(name, function(err, data) {
 			
-			res.end('Hello world', 'utf-8');
-	
+			res.writeHead(200, {'Content-Type': sup_ext[ext]});
+			
+			res.end(data, 'utf-8');
+		});
+	}
+	else
+	{
+		console.log('Unknown extention: ' + ext);
+		//res.statusCode = 404;
+		//res.end();
+	}
       
 });
 
-s.listen(process.env.PORT||3000);
+s.listen(5000);

@@ -1,0 +1,260 @@
+html, #search-container input, #form-container input {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+}
+
+.wow {
+  background-color: white !important;
+  border: none !important;
+  font-size: 160% !important;
+}
+
+body {
+  background-color: #f1f1f1;
+  height: 2000px;
+}
+
+#acc-changer {
+  color: rgba(0, 0, 238, 1);
+}
+
+#acc-changer {
+
+}
+
+#acc-changer {
+  
+}
+
+#page-container {
+  max-width: 1440px;
+  margin: auto;
+}
+
+#left-container {
+  overflow: hidden;
+  padding: 0 10px;
+  width: 27%;
+  float: left;
+  box-sizing: border-box;
+  white-space: nowrap;
+  perspective: 500px;
+  transform-style: preserve-3d;
+}
+
+#status-container {
+  background-color: white;
+  padding: 10px 10px;
+  margin: 0 0 15px 0;
+  transition: box-shadow 0.4s;
+  box-shadow: 0 4px 10px 0 rgba(255, 152, 0, 0.5), 0 4px 20px 0 rgba(255, 152, 0, 0.35);
+}
+
+#status-container > p {
+  margin: 0;
+  font-size: 120%;
+}
+
+#form-container {
+  position: relative;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 10px 0;
+  margin: 15px 0 15px 0;
+  transition: all 1.5s ease-in-out;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#form-before {
+  backface-visibility: hidden;
+}
+
+#form-after {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 5px;
+  position: absolute;
+  top: 0%;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+
+#form-after p {
+  text-align: center;
+}
+
+#acc-changer {
+  cursor: pointer;
+}
+
+#form-container div {
+  margin: 10px 0;
+}
+
+#form-container h3 {
+  font-weight: normal;
+  margin: 15px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+#form-container label {
+  display: inline-block;
+  width: 30%;
+  text-align: right;
+}
+
+#form-container input:not([type="submit"]) {
+  width: 50%;
+  background-color: rgba(244, 244, 244, 1);
+  border: 2px solid rgba(163, 163, 163, 1);
+  transition: all 0.3s ease 0s;
+  border-radius: 5px;
+  padding: 5px 10px;
+  outline: none;
+  transition: all 0.3s ease 0s;
+}
+
+#form-container input:not([type="submit"]):hover,
+ #form-container input:not([type="submit"]):focus {
+  background-color: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 1);
+}
+
+#form-container [type="submit"] {
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  outline: none;
+  margin-left: calc(30% + 3px);
+}
+
+#form-container input {
+  transition: all 0.3s ease 0s;
+}
+
+
+
+#right-container {
+  padding: 0 10px;
+  width: 73%;
+  float: left;
+  box-sizing: border-box;
+}
+
+#search-container {
+  background-color: #fff;
+  padding: 10px 5px;
+  margin: 0 0 15px 0;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#github-user {
+  background-color: rgba(244, 244, 244, 1);
+  border: 2px solid rgba(163, 163, 163, 1);
+  transition: all 0.6s, background-color 0.3s, border-color 0.3s;
+  border-radius: 5px;
+  padding: 5px 10px;
+  outline: none;
+  font-size: 15px;
+}
+
+#github-user:hover, #github-user:focus {
+  background-color: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 1);
+}
+
+#search-button {
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  outline: none;
+  font-size: 15px;
+}
+
+#search-button:hover {
+}
+
+#item-container {
+  background-color: #fff;
+  padding: 0px;
+  margin: 0px auto;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#item-container div {
+}
+
+#item-container > div {
+  padding: 10px 5px;
+}
+
+#item-container div:hover {
+}
+
+#item-container :last-child:not(a) {
+}
+
+#item-container a {
+  text-decoration: none;
+}
+
+.item {
+}
+
+.repohld {
+  position: relative;
+  border: 1px solid grey;
+  padding: 5px 5px;
+}
+
+.isshld {
+  overflow: hidden;
+  height: 0px;
+  margin-left: 10px;
+  margin-top: -1px;
+  border: 1px solid grey;
+  border-top: none;
+  transition: height 0.4s, margin-top 0.4s;
+}
+
+.iss {
+  padding: 5px 5px;
+}
+
+.tooltipster {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  padding: 3px 5px;
+  font-size: 80%;
+  bottom: calc(100% + 5px);
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: 1;
+}
+
+.tooltipster::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.repohld:hover .tooltipster {
+  opacity: 1;
+}
+
+.std {
+  transition: transform 1s !important;
+  transform-origin: 75% top;
+}
+
+.hidden {
+  transform: scaleX(0);
+}
