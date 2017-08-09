@@ -15,9 +15,16 @@ var s = http.createServer(function (req, res) {
 	
 	if(ext == 'db') {
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+			client.query('select * from test_table', function (err, q) {
+				if (err) {
+					console.log(err.stack)
+				} else {
+					console.log(q.rows[0])
+				}
+			});
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			res.end('hi');
-		})
+		});
 	}
 	else {
 		let sup_ext = {'html': 'text/html', 'css': 'text/css', 'js': 'text/javascript', 'ico': 'image/x-icon'};
