@@ -32,4 +32,4 @@ var s = http.createServer(function (req, res) {
       
 });
 
-s.listen(5000);
+s.listen(process.env.PORT||8080);
