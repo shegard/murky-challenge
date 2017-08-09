@@ -109,7 +109,7 @@ function check_credentials(login, password) {
 function ld (e) {
 
     let resp = JSON.parse(this.response);
-    console.log(JSON.stringify(resp, null, 2));
+    //console.log(JSON.stringify(resp, null, 2));
 
     if(resp.data.user) {
         set_status('found');
