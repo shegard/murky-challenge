@@ -15,7 +15,8 @@ var s = http.createServer(function (req, res) {
 	
 	if(ext == 'db') {
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-			alert('hi');
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.end('hi');
 		})
 	}
 	else {
@@ -39,4 +40,4 @@ var s = http.createServer(function (req, res) {
 	}
 });
 
-s.listen(process.env.PORT||8080);
+s.listen(process.env.PORT || 8080);
