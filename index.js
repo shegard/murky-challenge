@@ -1,5 +1,6 @@
 var http = require('http');
 var fs = require('fs');
+var pg = require('pg');
 
 
 var s = http.createServer(function (req, res) {
@@ -12,24 +13,30 @@ var s = http.createServer(function (req, res) {
 	}
 	let ext = name.substr(name.lastIndexOf('.') + 1);
 	
-	let sup_ext = {'html': 'text/html', 'css': 'text/css', 'js': 'text/javascript', 'ico': 'image/x-icon'};
-	
-	if(sup_ext[ext])
-	{
-		fs.readFile(name, function(err, data) {
-			
-			res.writeHead(200, {'Content-Type': sup_ext[ext]});
-			
-			res.end(data, 'utf-8');
-		});
+	if(ext == 'db') {
+		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+			alert('hi');
+		})
 	}
-	else
-	{
-		console.log('Unknown extention: ' + ext);
-		//res.statusCode = 404;
-		//res.end();
+	else {
+		let sup_ext = {'html': 'text/html', 'css': 'text/css', 'js': 'text/javascript', 'ico': 'image/x-icon'};
+		
+		if(sup_ext[ext])
+		{
+			fs.readFile(name, function(err, data) {
+				
+				res.writeHead(200, {'Content-Type': sup_ext[ext]});
+				
+				res.end(data, 'utf-8');
+			});
+		}
+		else
+		{
+			console.log('Unknown extention: ' + ext);
+			//res.statusCode = 404;
+			//res.end();
+		}
 	}
-      
 });
 
 s.listen(process.env.PORT||8080);
