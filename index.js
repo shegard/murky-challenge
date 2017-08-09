@@ -19,11 +19,10 @@ var s = http.createServer(function (req, res) {
 				if (err) {
 					console.log(err.stack)
 				} else {
-					console.log(q.rows[0])
+					res.writeHead(200, {'Content-Type': 'text/html'});
+					res.end(q.rows[0]);
 				}
 			});
-			res.writeHead(200, {'Content-Type': 'text/html'});
-			res.end('hi');
 		});
 	}
 	else {
