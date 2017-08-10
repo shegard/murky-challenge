@@ -9,15 +9,16 @@ if (process.env.DATABASE_URL) {
 	});
 	let tables = [];
 	pool.query("select table_name from information_schema.tables where table_schema like 'public'", (error, result) => {
-		if (!error) {
+		/*if (!error) {
 			let table_list = JSON.parse(result);
 			for (let table in table_list) {
 				if (table_list.hasOwnProperty(table)) {
 					tables.append(table_list[table]);
 				}
 			}
-		}
+		}*/
 		//console.log(JSON.stringify(tables));
+		console.log(result);
 		pool.end();
 	});
 }	
@@ -56,7 +57,7 @@ const s = http.createServer(function (req, res) {
 					});
 
 					pool2.query(qs.parse(x).query, (err, r) => {
-						res.write('<p>' + tables + JSON.stringify(tables) + '</p>');
+						//res.write('<p>' + tables + JSON.stringify(tables) + '</p>');
 						res.end(`<p>${JSON.stringify(err)}, ${JSON.stringify(r)}</p>`);
 						pool2.end();
 					});
@@ -73,6 +74,10 @@ const s = http.createServer(function (req, res) {
 
 		}
 	} else if (ext == 'test') {
+		res.writeHead(200, { 'Content-Type': 'text/html' });
+		console.log(tables);
+					res.end();
+		/*
 		let x = '';
 		req.on('data', function (data) {
 			x += data;
@@ -83,6 +88,7 @@ const s = http.createServer(function (req, res) {
 			res.writeHead(200, { 'Content-Type': 'application/json' });
 			res.end(x + ' recieved!');
 		});
+		*/
 	} else {
 		let sup_ext = { 'html': 'text/html', 'css': 'text/css', 'js': 'text/javascript', 'ico': 'image/x-icon' };
 
