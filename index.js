@@ -13,7 +13,7 @@ if (process.env.DATABASE_URL) {
 			let table_list = result.rows;
 			for (let table in table_list) {
 				if (table_list.hasOwnProperty(table)) {
-					tables.append(table_list[table]);
+					tables.push(table_list[table]);
 				}
 			}
 		}
