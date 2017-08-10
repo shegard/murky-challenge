@@ -3,11 +3,12 @@ const fs = require('fs');
 const pg = require('pg');
 const qs = require('querystring');
 
+let tables = [];
 if (process.env.DATABASE_URL) {
 	const pool = new pg.Pool({
 		connectionString: process.env.DATABASE_URL,
 	});
-	let tables = [];
+	
 	pool.query("select table_name from information_schema.tables where table_schema like 'public'", (error, result) => {
 		if (!error) {
 			let table_list = result.rows;
