@@ -17,7 +17,7 @@ if (process.env.DATABASE_URL) {
 				}
 			}
 		}
-		console.log(JSON.stringify(tables));
+		//console.log(JSON.stringify(tables));
 		pool.end();
 	});
 }	
@@ -56,6 +56,7 @@ const s = http.createServer(function (req, res) {
 					});
 
 					pool.query(qs.parse(x).query, (err, r) => {
+						res.write('<p>' + tables + JSON.stringify(tables) + '</p>');
 						res.end(`<p>${JSON.stringify(err)}, ${JSON.stringify(r)}</p>`);
 						pool.end();
 					});
