@@ -16,7 +16,7 @@ var s = http.createServer(function (req, res) {
 	if(ext == 'db') {
 		
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-			client.query('select * from test_table', function (err, q) {
+			client.query('select * from test_table;', function (err, q) {
 				if (err) {
 					console.log(err.stack)
 				} else {
