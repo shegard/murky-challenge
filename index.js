@@ -18,7 +18,7 @@ if (process.env.DATABASE_URL) {
 			}
 		}*/
 		//console.log(JSON.stringify(tables));
-		console.log(result);
+		console.log(JSON.parse(result));
 		pool.end();
 	});
 }	
@@ -75,7 +75,7 @@ const s = http.createServer(function (req, res) {
 		}
 	} else if (ext == 'test') {
 		res.writeHead(200, { 'Content-Type': 'text/html' });
-		console.log(tables);
+		
 					res.end();
 		/*
 		let x = '';
