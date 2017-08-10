@@ -21,12 +21,14 @@ var s = http.createServer(function (req, res) {
 			res.write('<p>' + process.env.DATABASE_URL + '</p>');
 			
 			client.query('select * from test_table;', function (err, result) {
-				done();
+				
 				if (err) {
 					console.log(err.stack)
 				} else {
 					res.write(`<script>console.log(${result});</script>`);
+					
 					client.end();
+					done();
 				}
 			});
 			res.end('<p>' + process.env.DATABASE_URL + '</p>');
