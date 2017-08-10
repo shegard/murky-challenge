@@ -1,10 +1,11 @@
 var http = require('http');
 var fs = require('fs');
 var pg = require('pg');
+var qs = require('querystring');
 
 
 var s = http.createServer(function (req, res) {
-	console.log(req.url);
+	console.log('URL: ' + req.url);
 
 	let name = req.url.substr(1);
 	if (!name) {
@@ -13,25 +14,42 @@ var s = http.createServer(function (req, res) {
 	let ext = name.substr(name.lastIndexOf('.') + 1);
 
 	if (ext == 'db') {
-		if (process.env.DATABASE_URL) {
-
+		if (req.method == 'GET') {
+			
 			res.writeHead(200, { 'Content-Type': 'text/html' });
-
-			const pool = new pg.Pool({
-				connectionString: process.env.DATABASE_URL,
-			});
-
-			pool.query('select * from information_schema.tables', (err, r) => {
-				res.end(`<p>console.log(${JSON.stringify(err)}, ${JSON.stringify(r)});</p>`);
-				pool.end();
-			});
-
-		}
-		else {
-
-			console.log('hi');
-			res.statusCode = 404;
+			res.write('<form method="post"><div><label for="label">Query:</label><input type="txt" id="label" name="query" value="" /></div><input type="submit" /></form>');
 			res.end();
+		}
+		else if (req.method == 'POST') {
+			
+			let x = '';
+			req.on('data', function (data) {
+				x += data;
+			});
+			req.on('end', function (data) {
+				console.log(qs.parse(x));
+				if (process.env.DATABASE_URL) {
+
+					res.writeHead(200, { 'Content-Type': 'text/html' });
+
+					const pool = new pg.Pool({
+						connectionString: process.env.DATABASE_URL,
+					});
+
+					pool.query(qs.parse(x).query, (err, r) => {
+						res.end(`<p>${JSON.stringify(err)}, ${JSON.stringify(r)}</p>`);
+						pool.end();
+					});
+
+				}
+				else {
+
+				
+					res.statusCode = 200;
+					res.end();
+
+				}
+			});
 
 		}
 	}
