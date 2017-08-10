@@ -15,22 +15,21 @@ var s = http.createServer(function (req, res) {
 	
 	if(ext == 'db') {
 		res.writeHead(200, {'Content-Type': 'text/html'});
-		res.write(process.env.DATABASE_URL);
+		res.write('<p>' + process.env.DATABASE_URL + '</p>');
 		
 		
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-			res.write(process.env.DATABASE_URL);
+			res.write('<p>' + process.env.DATABASE_URL + '</p>');
 			done();
-			/*client.query('select * from test_table;', function (err, q) {
+			client.query('select * from test_table;', function (err, result) {
 				if (err) {
 					console.log(err.stack)
 				} else {
-					res.writeHead(200, {'Content-Type': 'text/html'});
-					res.end(q.rows[0]||'123');
+					res.write('<p>' +  + '</p>');
+					client.end();
 				}
 			});
-			client.end();*/
-			res.end(process.env.DATABASE_URL);
+			res.end('<p>' + process.env.DATABASE_URL + '</p>');
 		});
 	}
 	else {
