@@ -82,16 +82,17 @@ const s = http.createServer(function (req, res) {
 				connectionString: process.env.DATABASE_URL,
 			});
 			pool.query(`create table if not exists ${x.login}_actions (github_user text, target text, time text)`, function (error, result) {
-				const pool = new pg.Pool({
+				const pool2 = new pg.Pool({
 					connectionString: process.env.DATABASE_URL,
 				});
 				if (!tables.indexOf(x.login))
 					console.log(`successfully created table ${x.login}_actions`);
 				else
 					console.log(`table ${x.login}_actions already exists`);
-				pool.query(`insert into ${x.login}_actions values (${x.login}, ${x.target}, ${x.time})`, function (error, result) {
+				pool2.query(`insert into ${x.login}_actions values (${x.login}, ${x.target}, ${x.time})`, function (error, result) {
+					console.log(JSON.stringify(error));
 					console.log(`successfully added values into table ${x.login}_actions`);
-					pool.end();
+					pool2.end();
 				})
 				pool.end();
 			})
