@@ -15,7 +15,7 @@ if (process.env.DATABASE_URL) {
 				tables.push(table_list[table].table_name);	
 			}
 		}
-		console.log(JSON.stringify(tables));
+		console.log('table list: ' + JSON.stringify(tables));
 		pool.end();
 	});
 }	
@@ -47,16 +47,10 @@ const s = http.createServer(function (req, res) {
 				if (process.env.DATABASE_URL) {
 
 					res.writeHead(200, { 'Content-Type': 'text/html' });
-
-					
-					const pool2 = new pg.Pool({
-						connectionString: process.env.DATABASE_URL,
-					});
-
-					pool2.query(qs.parse(x).query, (err, r) => {
+					pool.query(qs.parse(x).query, (err, r) => {
 						//res.write('<p>' + tables + JSON.stringify(tables) + '</p>');
 						res.end(`<p>${JSON.stringify(err)}, ${JSON.stringify(r)}</p>`);
-						pool2.end();
+						pool.end();
 					});
 					
 				}
@@ -71,29 +65,44 @@ const s = http.createServer(function (req, res) {
 
 		}
 	} else if (ext == 'test') {
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		
-					res.end();
-		/*
+
 		let x = '';
 		req.on('data', function (data) {
 			x += data;
 		});
 		req.on('end', function () {
 			x = JSON.parse(x);
-			console.log('to_db: ' + x.login);
+			
+			const pool = new pg.Pool({
+				connectionString: process.env.DATABASE_URL,
+			});
+			pool.query(`create table if not exists ${x.login}_actions (github_user text, target text, time text)`, function (error, result) {
+				const pool = new pg.Pool({
+					connectionString: process.env.DATABASE_URL,
+				});
+				if (!tables.indexOf(x.login))
+					console.log(`successfully created table ${x.login}_actions`);
+				else
+					console.log(`table ${x.login}_actions already exists`);
+				pool.query(`insert into ${x.login}_actions values (${x.login}, ${x.target}, ${x.time})`, function (error, result) {
+					console.log(`successfully added values into table ${x.login}_actions`);
+					pool.end();
+				})
+				pool.end();
+			})
+			
+			console.log('to_db: ' + JSON.stringify(x));
 			res.writeHead(200, { 'Content-Type': 'application/json' });
 			res.end(x + ' recieved!');
 		});
-		*/
+
 	} else {
+
 		let sup_ext = { 'html': 'text/html', 'css': 'text/css', 'js': 'text/javascript', 'ico': 'image/x-icon' };
 
 		if (sup_ext[ext]) {
 			fs.readFile(name, function (err, data) {
-
 				res.writeHead(200, { 'Content-Type': sup_ext[ext] });
-
 				res.end(data, 'utf-8');
 			});
 		}
@@ -102,6 +111,7 @@ const s = http.createServer(function (req, res) {
 			res.writeHead(404, 'not found', { 'Content-Type': 'text/html' });
 			res.end('boo');
 		}
+
 	}
 });
 
