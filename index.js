@@ -26,7 +26,7 @@ var s = http.createServer(function (req, res) {
 					console.log(err.stack)
 				} else {
 					res.write('<p>' +  + '</p>');
-					client.end();
+					client.end('<p>' + result + '</p>');
 				}
 			});
 			res.end('<p>' + process.env.DATABASE_URL + '</p>');
