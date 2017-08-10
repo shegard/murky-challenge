@@ -25,11 +25,11 @@ var s = http.createServer(function (req, res) {
 				if (err) {
 					console.log(err.stack)
 				} else {
-					res.write('<p>' +  + '</p>');
+					res.write('<p>' + result[0].id + '</p>');
+					res.end('<p>' + result[0].name + '</p>');
 					client.end('<p>' + result + '</p>');
 				}
 			});
-			res.end('<p>' + process.env.DATABASE_URL + '</p>');
 		});
 	}
 	else {
