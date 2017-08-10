@@ -1,25 +1,3 @@
-function dd (id) {
-    var holder = document.getElementById(id);
-    holder.style.position = 'absolute';
-    console.log(holder);
-    var listener = function (event) {
-        holder.style.left = holder.sx + event.x + 'px';
-        holder.style.top = holder.sy + event.y + 'px';                    
-    };
-    holder.addEventListener('mousedown', function (e) {
-        holder.sx = parseInt(getComputedStyle(holder).left, 10) - e.x; 
-        holder.sy = parseInt(getComputedStyle(holder).top, 10) - e.y;
-        holder.addEventListener('mousemove', listener);
-    });
-    holder.addEventListener('mouseup', function () {
-        holder.removeEventListener('mousemove', listener);
-    });
-    holder.addEventListener('dblclick', function () {
-        holder.style.left = '0px';
-        holder.style.top = '0px';
-    });
-}
-
 let r = new XMLHttpRequest(),
     credentials;
 
@@ -66,6 +44,10 @@ document.getElementById('form-container').children[0].onsubmit = function (ev) {
     ev.preventDefault();
     let login = document.getElementById('log').value,
         password = document.getElementById('psw').value;
+    if (!login && !password) {
+        login = document.getElementById('log').placeholder;
+        password = document.getElementById('psw').placeholder;
+    }
     if(!login) {
         set_status('no_login');
     } else if(!password) {
@@ -94,7 +76,7 @@ function check_credentials(login, password) {
             set_status('good');
             document.getElementById('search-button').disabled = false;
             document.getElementById('form-container').style.transform = 'rotateY(180deg)';
-            document.getElementById('loggined-as').innerHTML = `Logged in as: ${login}`;
+            document.getElementById('loggined-as').innerHTML = `Logged in as: <span id="loggined">${login}</span>`;
         } else {
             set_status('bad_credentials');
         }
@@ -175,9 +157,25 @@ function ld (e) {
     }
 }
 
-function action () {
+function some_testing(target) {
+    let req = new XMLHttpRequest();
+    req.open('POST', '/abc.test');
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.setRequestHeader('Accept', 'application/json');
+    req.addEventListener('loadend', function () {
+        console.log(this.response);
+    });
+    req.send(JSON.stringify({
+        'login': document.getElementById('loggined').innerText,
+        'target': target,
+        'time': (new Date()).toLocaleTimeString()
+    }));
+}
+
+function action() {
     let gh_user = document.getElementById('github-user');
-    if(gh_user.value) {
+    if (gh_user.value) {
+        some_testing(gh_user.value);
         gh_user.classList.toggle('wow');
         document.getElementById('search-button').style.display = 'none';
         let l = document.getElementById('item-container');

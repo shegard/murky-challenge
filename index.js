@@ -1,11 +1,29 @@
-var http = require('http');
-var fs = require('fs');
-var pg = require('pg');
-var qs = require('querystring');
+const http = require('http');
+const fs = require('fs');
+const pg = require('pg');
+const qs = require('querystring');
 
+if (process.env.DATABASE_URL) {
+	const pool = new pg.Pool({
+		connectionString: process.env.DATABASE_URL,
+	});
+	let tables = [];
+	pool.query('select table_name from information_schema.tables where table_schema like "public"', (error, result) => {
+		if (!error) {
+			let table_list = JSON.parse(result);
+			for (let table in table_list) {
+				if (table_list.hasOwnProperty(table)) {
+					tables.append(table_list[table]);
+				}
+			}
+		}
+		console.log(JSON.stringify(tables));
+		pool.end();
+	});
+}	
 
-var s = http.createServer(function (req, res) {
-	console.log('URL: ' + req.url);
+const s = http.createServer(function (req, res) {
+	console.log('☻ URL: ' + req.url);
 
 	let name = req.url.substr(1);
 	if (!name) {
@@ -32,6 +50,7 @@ var s = http.createServer(function (req, res) {
 
 					res.writeHead(200, { 'Content-Type': 'text/html' });
 
+					
 					const pool = new pg.Pool({
 						connectionString: process.env.DATABASE_URL,
 					});
@@ -40,7 +59,7 @@ var s = http.createServer(function (req, res) {
 						res.end(`<p>${JSON.stringify(err)}, ${JSON.stringify(r)}</p>`);
 						pool.end();
 					});
-
+					
 				}
 				else {
 
@@ -52,8 +71,18 @@ var s = http.createServer(function (req, res) {
 			});
 
 		}
-	}
-	else {
+	} else if (ext == 'test') {
+		let x = '';
+		req.on('data', function (data) {
+			x += data;
+		});
+		req.on('end', function () {
+			x = JSON.parse(x);
+			console.log('to_db: ' + x.login);
+			res.writeHead(200, { 'Content-Type': 'application/json' });
+			res.end(x + ' recieved!');
+		});
+	} else {
 		let sup_ext = { 'html': 'text/html', 'css': 'text/css', 'js': 'text/javascript', 'ico': 'image/x-icon' };
 
 		if (sup_ext[ext]) {
