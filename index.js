@@ -20,12 +20,13 @@ var s = http.createServer(function (req, res) {
 		
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 			res.write('<p>' + process.env.DATABASE_URL + '</p>');
-			done();
+			
 			client.query('select * from test_table;', function (err, result) {
+				done();
 				if (err) {
 					console.log(err.stack)
 				} else {
-					res.write('<p>' + result.rows[0] + '</p>');
+					res.write('<p>' + result.rows[0].id + '</p>');
 					client.end();
 				}
 			});
