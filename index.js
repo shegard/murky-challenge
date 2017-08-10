@@ -20,11 +20,11 @@ var s = http.createServer(function (req, res) {
 		var t = 'postgres://lnhlxeyjbmuulj:5bee12a96deb836d71c2c01f1e93625b637047722e1e819c16199e0227376dc9@ec2-23-21-85-76.compute-1.amazonaws.com:5432/df4dlfk18mdls';
 
 		const pool = new pg.Pool({
-			connectionString: t,
+			connectionString: process.env.DATABASE_URL || t,
 		});
 
 		pool.query('select * from test_table', (err, r) => {
-			res.end(`<script>console.log(${err}, ${r});</script>`);
+			res.end(`<p>console.log(${JSON.stringify(r)});</p>`);
 			pool.end();
 		});
 
