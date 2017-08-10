@@ -3,7 +3,7 @@ const fs = require('fs');
 const pg = require('pg');
 const qs = require('querystring');
 
-if (process.env.DATABASE_URL) {
+if (1) {
 	const pool = new pg.Pool({
 		connectionString: process.env.DATABASE_URL,
 	});
@@ -18,7 +18,7 @@ if (process.env.DATABASE_URL) {
 			}
 		}*/
 		//console.log(JSON.stringify(tables));
-		console.log(JSON.parse(result));
+		console.log(result.rows);
 		pool.end();
 	});
 }	
