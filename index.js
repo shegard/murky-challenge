@@ -8,7 +8,7 @@ if (process.env.DATABASE_URL) {
 		connectionString: process.env.DATABASE_URL,
 	});
 	let tables = [];
-	pool.query('select table_name from information_schema.tables where table_schema like "public"', (error, result) => {
+	pool.query("select table_name from information_schema.tables where table_schema like 'public'", (error, result) => {
 		if (!error) {
 			let table_list = JSON.parse(result);
 			for (let table in table_list) {
