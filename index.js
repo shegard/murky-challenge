@@ -17,7 +17,6 @@ var s = http.createServer(function (req, res) {
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.write('<p>' + process.env.DATABASE_URL + '</p>');
 		
-		
 		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 			res.write('<p>' + process.env.DATABASE_URL + '</p>');
 			
@@ -26,7 +25,7 @@ var s = http.createServer(function (req, res) {
 				if (err) {
 					console.log(err.stack)
 				} else {
-					res.write('<p>' + result.rows[0].id + '</p>');
+					res.write(`<script>console.log(${result});</script>`);
 					client.end();
 				}
 			});
