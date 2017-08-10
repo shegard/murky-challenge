@@ -3,22 +3,21 @@ const fs = require('fs');
 const pg = require('pg');
 const qs = require('querystring');
 
-if (1) {
+if (process.env.DATABASE_URL) {
 	const pool = new pg.Pool({
 		connectionString: process.env.DATABASE_URL,
 	});
 	let tables = [];
 	pool.query("select table_name from information_schema.tables where table_schema like 'public'", (error, result) => {
-		/*if (!error) {
-			let table_list = JSON.parse(result);
+		if (!error) {
+			let table_list = result.rows;
 			for (let table in table_list) {
 				if (table_list.hasOwnProperty(table)) {
 					tables.append(table_list[table]);
 				}
 			}
-		}*/
-		//console.log(JSON.stringify(tables));
-		console.log(result.rows);
+		}
+		console.log(tables);
 		pool.end();
 	});
 }	
