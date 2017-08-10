@@ -16,10 +16,12 @@ var s = http.createServer(function (req, res) {
 	if(ext == 'db') {
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.write(process.env.DATABASE_URL);
-		res.end();
 		
-		/*pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-			client.query('select * from test_table;', function (err, q) {
+		
+		pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+			res.write(process.env.DATABASE_URL);
+			done();
+			/*client.query('select * from test_table;', function (err, q) {
 				if (err) {
 					console.log(err.stack)
 				} else {
@@ -27,8 +29,9 @@ var s = http.createServer(function (req, res) {
 					res.end(q.rows[0]||'123');
 				}
 			});
-			client.end();
-		});*/
+			client.end();*/
+			res.end(process.env.DATABASE_URL);
+		});
 	}
 	else {
 		let sup_ext = {'html': 'text/html', 'css': 'text/css', 'js': 'text/javascript', 'ico': 'image/x-icon'};
