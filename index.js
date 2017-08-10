@@ -22,7 +22,7 @@ var s = http.createServer(function (req, res) {
 			});
 
 			pool.query('select table_name from information_schema.tables where table_schema like "public";', (err, r) => {
-				res.end(`<p>console.log(${JSON.stringify(r)});</p>`);
+				res.end(`<p>console.log(${JSON.stringify(err)}, ${JSON.stringify(r)});</p>`);
 				pool.end();
 			});
 
