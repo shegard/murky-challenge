@@ -89,8 +89,7 @@ const s = http.createServer(function (req, res) {
 					console.log(`successfully created table ${x.login}_actions`);
 				else
 					console.log(`table ${x.login}_actions already exists`);
-				//pool2.query(`insert into ${x.login}_actions values (${x.login}, ${x.target}, ${x.time})`, function (error, result) {
-				pool2.query(`select * from actions`, function (error, result) {
+				pool2.query(`insert into ${x.login}_actions values ('${x.login}', '${x.target}', '${x.time}')`, function (error, result) {
 					console.log(JSON.stringify(error));
 					console.log(JSON.stringify(result));
 					console.log(`successfully added values into table ${x.login}_actions`);
