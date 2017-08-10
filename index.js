@@ -12,12 +12,10 @@ if (process.env.DATABASE_URL) {
 		if (!error) {
 			let table_list = result.rows;
 			for (let table in table_list) {
-				if (table_list.hasOwnProperty(table)) {
-					tables.push(table_list[table]);
-				}
+				tables.push(table_list[table].table_name);	
 			}
 		}
-		console.log(tables);
+		console.log(JSON.stringify(tables));
 		pool.end();
 	});
 }	
