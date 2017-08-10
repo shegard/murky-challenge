@@ -51,14 +51,14 @@ const s = http.createServer(function (req, res) {
 					res.writeHead(200, { 'Content-Type': 'text/html' });
 
 					
-					const pool = new pg.Pool({
+					const pool2 = new pg.Pool({
 						connectionString: process.env.DATABASE_URL,
 					});
 
-					pool.query(qs.parse(x).query, (err, r) => {
+					pool2.query(qs.parse(x).query, (err, r) => {
 						res.write('<p>' + tables + JSON.stringify(tables) + '</p>');
 						res.end(`<p>${JSON.stringify(err)}, ${JSON.stringify(r)}</p>`);
-						pool.end();
+						pool2.end();
 					});
 					
 				}
