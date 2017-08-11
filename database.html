@@ -1,0 +1,128 @@
+<html>
+
+<head>
+
+  <title>heroku&postgres demo</title>
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <style>
+    html {
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+    }
+
+    body {
+      background-color: #f1f1f1;
+    }
+
+    #page-container {
+      max-width: 1440px;
+      margin: auto;
+    }
+
+    #main-container {
+      padding: 0 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #head-container {
+      background-color: #fff;
+      padding: 10px 35px;
+      margin: 0 0 15px 0;
+      box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    #item-container {
+      background-color: #fff;
+      padding: 10px 15px;
+      margin: 0px auto;
+      box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .item>div {
+      display: inline-block;
+      width: 20%;
+      border: 1px solid lightgrey;
+      padding: 10px 10px;
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <div id="page-container">
+
+    <div id="main-container">
+
+      <div id="head-container">
+        <span id="user"></span>
+      </div>
+
+      <div id="item-container"></div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+    
+    let name = window.location.pathname.substr(1);
+    name = name.substring(0, name.indexOf('.'));
+    document.getElementById('user').innerHTML = `${name}`;
+    let request = new XMLHttpRequest();
+    //console.log(name);
+    request.open('POST', window.location.pathname);
+    request.addEventListener('loadend', function () {
+      let rows = JSON.parse(request.response).rows;
+      console.log(rows);
+      build_table(rows);
+    });
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.setRequestHeader('Accept', 'application/json');
+    request.send();
+
+    function build_table(rows) {
+      let itemContainer = document.getElementById('item-container');
+      rows.unshift({
+        'github_user': 'user',
+        'target': 'target',
+        'time': 'time'
+      });
+      for (let i = 0; i < rows.length; i++) {
+        let row = rows[i];
+
+        let item = document.createElement('div');
+        item.classList.add('item');
+
+        let column1 = document.createElement('div');
+        column1.classList.add('column1');
+        let column1Content = document.createElement('span');
+        column1Content.innerHTML = row.github_user
+        column1.appendChild(column1Content);
+        item.appendChild(column1);
+
+        let column2 = document.createElement('div');
+        column2.classList.add('column2');
+        let column2Content = document.createElement('span');
+        column2Content.innerHTML = row.target
+        column2.appendChild(column2Content);
+        item.appendChild(column2);
+
+        let column3 = document.createElement('div');
+        column3.classList.add('column3');
+        let column3Content = document.createElement('span');
+        column3Content.innerHTML = row.time
+        column3.appendChild(column3Content);
+        item.appendChild(column3);
+
+        itemContainer.appendChild(item);
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>
